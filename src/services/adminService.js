@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5080/api/admin/';
+const API_URL = 'https://ecollect-server.onrender.com/api/admin/';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
