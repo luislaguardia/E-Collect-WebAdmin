@@ -1,0 +1,90 @@
+.kiosk-finder-container {
+  display: flex;
+  gap: 2rem;
+  height: calc(100vh - 4rem); /* Full height minus padding */
+}
+
+.kiosk-list-panel {
+  flex-basis: 30%;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow-y: auto;
+}
+
+.kiosk-list-panel h2 {
+  margin-top: 0;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 1rem;
+}
+
+.kiosk-list-panel ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.kiosk-list-panel li {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.kiosk-list-panel li:hover {
+  background-color: #f9f9f9;
+}
+
+.kiosk-list-panel li.selected {
+  background-color: #eef5e6;
+  border-left: 4px solid #94c83d;
+}
+
+.kiosk-list-panel li p {
+  margin: 0.25rem 0 0;
+  color: #666;
+}
+
+.kiosk-map-panel {
+  flex-basis: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.kiosk-details {
+  background-color: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-bottom: 1rem;
+}
+
+.kiosk-details h3 {
+  margin: 0 0 0.5rem 0;
+}
+.kiosk-details p {
+  margin: 0.25rem 0;
+}
+
+.status {
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 5px;
+  color: #fff;
+}
+.status.active {
+  background-color: #56ab2f;
+}
+.status.inactive {
+  background-color: #888;
+}
+
+.map-view {
+  flex-grow: 1;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  /* This is crucial for Leaflet to render */
+  height: 100%; 
+  width: 100%;
+}

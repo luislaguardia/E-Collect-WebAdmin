@@ -1,0 +1,11 @@
+.main-layout {
+    display: flex;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    padding: 2rem;
+    margin-left: 250px; /* Same as sidebar width */
+    background-color: #f9f9f9;
+    min-height: 100vh;
+  }

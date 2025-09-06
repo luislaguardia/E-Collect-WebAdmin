@@ -1,0 +1,90 @@
+.manage-kiosk-container h1 {
+    margin-bottom: 2rem;
+  }
+  
+  .add-kiosk-form {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .add-kiosk-form h3 {
+    margin: 0;
+    margin-right: auto;
+  }
+  
+  .add-kiosk-form input {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .add-kiosk-form button {
+    padding: 0.75rem 1.5rem;
+    background-color: #56ab2f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .kiosk-table-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+  
+  .kiosk-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .kiosk-table th, .kiosk-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .kiosk-table thead {
+    background-color: #94c83d;
+    color: #333;
+  }
+  
+  .situation-tag, .status-tag {
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .situation-tag.available { background-color: #28a745; }
+  .situation-tag.full { background-color: #dc3545; }
+  .situation-tag.maintenance { background-color: #ffc107; color: #333; }
+  
+  .status-tag.active { background-color: #007bff; }
+  .status-tag.inactive { background-color: #6c757d; }
+  
+  .action-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .action-buttons button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+  
+  .btn-status { background-color: #ffc107; color: #333; }
+  .btn-delete { background-color: #dc3545; }
