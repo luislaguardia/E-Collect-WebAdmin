@@ -1,23 +1,75 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { useNavigate } from 'react-router-dom';
+import L from 'leaflet';
 import adminService from '../services/adminService';
 import 'leaflet/dist/leaflet.css';
 import './InfoPage.css';
 import logo from '../assets/ecollect-logo.png';
 
-// Coordinate mapping for kiosk locations
-const kioskCoordinates = {
-  "Makati City": [14.5547, 121.0244],
-  "Pasig City": [14.5608, 121.0776],
-  "Taguig City": [14.5306, 121.0575],
-  // Add more locations as needed
+// Custom marker icons based on status
+const createCustomIcon = (status, capacity = 0) => {
+  const getStatusColor = (status) => {
+    switch (status?.toLowerCase()) {
+      case 'active':
+        return '#4CAF50';
+      case 'maintenance':
+        return '#FF9800';
+      case 'inactive':
+        return '#9E9E9E';
+      default:
+        return '#9E9E9E';
+    }
+  };
+
+  const getCapacityColor = (capacity) => {
+    if (capacity > 80) return '#f44336';
+    if (capacity > 50) return '#FF9800';
+    return '#4CAF50';
+  };
+
+  const statusColor = getStatusColor(status);
+  const capacityColor = getCapacityColor(capacity);
+  
+  return L.divIcon({
+    html: `
+      <div style="
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: ${statusColor};
+        border: 3px solid white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 10px;
+        position: relative;
+      ">
+        ${capacity > 0 ? Math.round(capacity) + '%' : ''}
+        ${capacity > 80 ? '<div style="position: absolute; top: -2px; left: -2px; width: 30px; height: 30px; border: 2px solid ' + capacityColor + '; border-radius: 50%; animation: pulse 2s infinite;"></div>' : ''}
+      </div>
+      <style>
+        @keyframes pulse {
+          0% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.1); opacity: 0.7; }
+          100% { transform: scale(1); opacity: 1; }
+        }
+      </style>
+    `,
+    className: 'custom-div-icon',
+    iconSize: [30, 30],
+    iconAnchor: [15, 15]
+  });
 };
 
 const InfoPage = () => {
   const [kiosks, setKiosks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [mapCenter, setMapCenter] = useState([14.5995, 120.9842]); // Default Manila center
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,35 +77,71 @@ const InfoPage = () => {
   }, []);
 
   const fetchKiosks = async () => {
+    setLoading(true);
+    setError('');
+    
     try {
-      // Try to fetch without authentication first for public info
       const response = await adminService.getAllKiosks();
-      if (response.data.success) {
-        setKiosks(response.data.data);
+      
+      if (response.data.success && response.data.data) {
+        const kioskData = response.data.data;
+        setKiosks(kioskData);
+        
+        // Calculate map center based on kiosk locations
+        if (kioskData.length > 0) {
+          const validKiosks = kioskData.filter(kiosk => 
+            kiosk.coordinates && 
+            kiosk.coordinates.latitude && 
+            kiosk.coordinates.longitude
+          );
+          
+          if (validKiosks.length > 0) {
+            const avgLat = validKiosks.reduce((sum, kiosk) => sum + kiosk.coordinates.latitude, 0) / validKiosks.length;
+            const avgLng = validKiosks.reduce((sum, kiosk) => sum + kiosk.coordinates.longitude, 0) / validKiosks.length;
+            setMapCenter([avgLat, avgLng]);
+          }
+        }
+      } else {
+        throw new Error('Invalid API response format');
       }
     } catch (err) {
-      // If admin service fails, create mock data for demo
-      console.warn('Failed to fetch kiosks, using demo data:', err);
-      setKiosks([
+      console.error('Failed to fetch kiosks from backend:', err);
+      setError('Unable to load kiosk locations. Please check your connection.');
+      
+      // Fallback to demo data for development
+      const fallbackKiosks = [
         {
-          _id: '1',
-          kioskNumber: 'K001',
-          location: 'Makati City',
-          status: 'active'
+          _id: 'demo1',
+          kioskNumber: 'KIOSK001',
+          location: 'Makati City - Ayala Center',
+          status: 'ACTIVE',
+          coordinates: { latitude: 14.5547, longitude: 121.0244 },
+          capacity: { current: 45, max: 100 },
+          operatingHours: { open: '06:00', close: '22:00' },
+          description: 'Located near Ayala Triangle Gardens'
         },
         {
-          _id: '2',
-          kioskNumber: 'K002',
-          location: 'Pasig City',
-          status: 'active'
+          _id: 'demo2',
+          kioskNumber: 'KIOSK002', 
+          location: 'Pasig City - Ortigas Center',
+          status: 'ACTIVE',
+          coordinates: { latitude: 14.5608, longitude: 121.0776 },
+          capacity: { current: 78, max: 100 },
+          operatingHours: { open: '07:00', close: '21:00' },
+          description: 'Inside Megamall complex'
         },
         {
-          _id: '3',
-          kioskNumber: 'K003',
-          location: 'Taguig City',
-          status: 'inactive'
+          _id: 'demo3',
+          kioskNumber: 'KIOSK003',
+          location: 'Taguig City - BGC',
+          status: 'MAINTENANCE',
+          coordinates: { latitude: 14.5306, longitude: 121.0575 },
+          capacity: { current: 30, max: 100 },
+          operatingHours: { open: '08:00', close: '20:00' },
+          description: 'High Street Central area'
         }
-      ]);
+      ];
+      setKiosks(fallbackKiosks);
     } finally {
       setLoading(false);
     }
@@ -63,8 +151,45 @@ const InfoPage = () => {
     navigate('/login');
   };
 
-  // Default center (Manila, Philippines)
-  const defaultCenter = [14.5995, 120.9842];
+  const getStatusColor = (status) => {
+    switch (status?.toLowerCase()) {
+      case 'active':
+        return '#4CAF50';
+      case 'maintenance':
+        return '#FF9800';
+      case 'inactive':
+        return '#9E9E9E';
+      default:
+        return '#9E9E9E';
+    }
+  };
+
+  const getCapacityPercentage = (kiosk) => {
+    if (!kiosk.capacity || !kiosk.capacity.max || kiosk.capacity.max === 0) {
+      return 0;
+    }
+    return Math.round((kiosk.capacity.current / kiosk.capacity.max) * 100);
+  };
+
+  const isKioskOpen = (kiosk) => {
+    if (!kiosk.operatingHours) return true;
+    
+    const now = new Date();
+    const currentTime = now.getHours() * 60 + now.getMinutes();
+    
+    const [openHour, openMin] = kiosk.operatingHours.open.split(':').map(Number);
+    const [closeHour, closeMin] = kiosk.operatingHours.close.split(':').map(Number);
+    
+    const openTime = openHour * 60 + openMin;
+    const closeTime = closeHour * 60 + closeMin;
+    
+    return currentTime >= openTime && currentTime <= closeTime;
+  };
+
+  const activeKiosksCount = kiosks.filter(k => k.status?.toLowerCase() === 'active').length;
+  const totalItemsRecycled = kiosks.reduce((sum, kiosk) => {
+    return sum + (kiosk.capacity?.current || 0);
+  }, 0);
 
   return (
     <div className="info-page">
@@ -92,15 +217,15 @@ const InfoPage = () => {
             <div className="hero-stats">
               <div className="hero-stat">
                 <span className="stat-number">{kiosks.length}</span>
-                <span className="stat-label">Active Kiosks</span>
+                <span className="stat-label">Total Kiosks</span>
               </div>
               <div className="hero-stat">
-                <span className="stat-number">10K+</span>
+                <span className="stat-number">{totalItemsRecycled}+</span>
                 <span className="stat-label">Items Recycled</span>
               </div>
               <div className="hero-stat">
-                <span className="stat-number">500+</span>
-                <span className="stat-label">Happy Users</span>
+                <span className="stat-number">{activeKiosksCount}</span>
+                <span className="stat-label">Active Kiosks</span>
               </div>
             </div>
           </div>
@@ -181,13 +306,24 @@ const InfoPage = () => {
                 <line x1="9" y1="9" x2="15" y2="15"/>
               </svg>
               <p>{error}</p>
+              <button onClick={fetchKiosks} style={{
+                marginTop: '1rem',
+                padding: '0.5rem 1rem',
+                backgroundColor: '#94c83d',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer'
+              }}>
+                Retry
+              </button>
             </div>
           ) : (
             <>
               <div className="map-container">
                 <MapContainer
-                  center={defaultCenter}
-                  zoom={11}
+                  center={mapCenter}
+                  zoom={12}
                   style={{ height: '500px', width: '100%' }}
                   className="leaflet-map"
                 >
@@ -196,20 +332,81 @@ const InfoPage = () => {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                   />
                   {kiosks.map((kiosk) => {
-                    const position = kioskCoordinates[kiosk.location] || defaultCenter;
+                    // Only render kiosks with valid coordinates
+                    if (!kiosk.coordinates || !kiosk.coordinates.latitude || !kiosk.coordinates.longitude) {
+                      return null;
+                    }
+
+                    const position = [kiosk.coordinates.latitude, kiosk.coordinates.longitude];
+                    const capacityPercentage = getCapacityPercentage(kiosk);
+                    const isOpen = isKioskOpen(kiosk);
+                    
                     return (
-                      <Marker key={kiosk._id} position={position}>
+                      <Marker 
+                        key={kiosk._id} 
+                        position={position}
+                        icon={createCustomIcon(kiosk.status, capacityPercentage)}
+                      >
                         <Popup>
                           <div className="popup-content">
                             <h4>Kiosk #{kiosk.kioskNumber}</h4>
                             <p><strong>Location:</strong> {kiosk.location}</p>
-                            <p><strong>Status:</strong> 
-                              <span className={`status ${kiosk.status?.toLowerCase() || 'active'}`}>
+                            <p>
+                              <strong>Status:</strong> 
+                              <span 
+                                className={`status ${kiosk.status?.toLowerCase() || 'active'}`}
+                                style={{
+                                  backgroundColor: kiosk.status?.toLowerCase() === 'active' ? '#c6f6d5' : 
+                                                 kiosk.status?.toLowerCase() === 'maintenance' ? '#fff3e0' : '#fed7d7',
+                                  color: kiosk.status?.toLowerCase() === 'active' ? '#22543d' :
+                                         kiosk.status?.toLowerCase() === 'maintenance' ? '#ef6c00' : '#742a2a'
+                                }}
+                              >
                                 {kiosk.status || 'Active'}
                               </span>
                             </p>
                             {kiosk.capacity && (
-                              <p><strong>Capacity:</strong> {kiosk.capacity.current}/{kiosk.capacity.max}</p>
+                              <div>
+                                <p><strong>Capacity:</strong> {capacityPercentage}% full</p>
+                                <div style={{
+                                  width: '100%',
+                                  height: '6px',
+                                  backgroundColor: '#e0e0e0',
+                                  borderRadius: '3px',
+                                  overflow: 'hidden',
+                                  marginTop: '4px'
+                                }}>
+                                  <div style={{
+                                    width: `${capacityPercentage}%`,
+                                    height: '100%',
+                                    backgroundColor: capacityPercentage > 80 ? '#f44336' :
+                                                   capacityPercentage > 50 ? '#FF9800' : '#4CAF50',
+                                    borderRadius: '3px',
+                                    transition: 'width 0.3s ease'
+                                  }}></div>
+                                </div>
+                              </div>
+                            )}
+                            {kiosk.operatingHours && (
+                              <p>
+                                <strong>Hours:</strong> {kiosk.operatingHours.open} - {kiosk.operatingHours.close}
+                                <span style={{
+                                  marginLeft: '8px',
+                                  padding: '2px 6px',
+                                  borderRadius: '8px',
+                                  fontSize: '10px',
+                                  fontWeight: 'bold',
+                                  backgroundColor: isOpen ? '#c6f6d5' : '#fed7d7',
+                                  color: isOpen ? '#22543d' : '#742a2a'
+                                }}>
+                                  {isOpen ? 'OPEN' : 'CLOSED'}
+                                </span>
+                              </p>
+                            )}
+                            {kiosk.description && (
+                              <p style={{ fontSize: '12px', color: '#666', marginTop: '8px' }}>
+                                {kiosk.description}
+                              </p>
                             )}
                           </div>
                         </Popup>
@@ -235,7 +432,7 @@ const InfoPage = () => {
                       <polyline points="20 6 9 17 4 12" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
-                  <h3>{kiosks.filter(k => k.status?.toLowerCase() !== 'inactive').length}</h3>
+                  <h3>{activeKiosksCount}</h3>
                   <p>Active Kiosks</p>
                 </div>
                 <div className="stat-card">
@@ -245,7 +442,7 @@ const InfoPage = () => {
                       <polygon points="16.24,7.76 14.12,14.12 7.76,16.24 9.88,9.88 16.24,7.76" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
-                  <h3>3</h3>
+                  <h3>{new Set(kiosks.map(k => k.location?.split(' - ')[0] || k.location)).size}</h3>
                   <p>Cities Covered</p>
                 </div>
               </div>
@@ -278,7 +475,6 @@ const InfoPage = () => {
           <div className="footer-content">
             <div className="footer-brand">
               <img src={logo} alt="E-Collect Logo" className="footer-logo" />
-              {/* <h3>E-Collect</h3> */}
               <p>Building a sustainable future through smart e-waste management.</p>
             </div>
             
