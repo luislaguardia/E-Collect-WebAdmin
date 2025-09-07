@@ -1,4 +1,4 @@
-/* InfoPage.css - Redesigned */
+/* InfoPage.css - Redesigned with Fixed Mobile Stats */
 
 * {
   margin: 0;
@@ -147,7 +147,7 @@
 }
 
 .stat-label {
-  font-size: 1rem;
+  font-size: 0.9rem;
   opacity: 0.8;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -572,6 +572,15 @@
     gap: 2rem;
   }
   
+  /* Mobile hero stats adjustment */
+  .stat-number {
+    font-size: 2rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+  }
+  
   .section-header h2 {
     font-size: 2.5rem;
   }
@@ -592,6 +601,30 @@
   
   .map-container {
     padding: 1rem;
+  }
+  
+  /* Mobile kiosk stats - smaller stat cards */
+  .stat-card {
+    padding: 1.5rem 1rem;
+  }
+  
+  .stat-card h3 {
+    font-size: 1.8rem;
+  }
+  
+  .stat-card p {
+    font-size: 0.8rem;
+  }
+  
+  .stat-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 0.8rem;
+  }
+  
+  .stat-icon svg {
+    width: 25px;
+    height: 25px;
   }
   
   .cta-section {
@@ -627,16 +660,56 @@
     font-size: 2rem;
   }
   
+  /* Smaller hero stats for mobile */
+  .stat-number {
+    font-size: 1.6rem;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+  }
+  
   .section-header h2 {
     font-size: 2rem;
   }
   
-  .stat-number {
-    font-size: 2.5rem;
+  /* Even smaller kiosk stats for very small screens */
+  .kiosk-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .stat-card {
+    padding: 1.2rem 0.8rem;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   
   .stat-card h3 {
-    font-size: 2rem;
+    font-size: 1.5rem;
+  }
+  
+  .stat-card p {
+    font-size: 0.75rem;
+    line-height: 1.1;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+  
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 0.6rem;
+  }
+  
+  .stat-icon svg {
+    width: 20px;
+    height: 20px;
   }
   
   .cta-content h2 {
