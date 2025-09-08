@@ -1,0 +1,104 @@
+A large enterprise plans to expand its operations online. It requires computing hardware strong enough to handle millions of daily page requests. Which concern applies?
+Answer: Hardware platform sizing
+
+A business selects a payment method based on how fast, convenient, and safe it is for end users. Which perspective does this reflect?
+Answer: Consumer
+
+An e-commerce shop worries about fraud from stolen card details during online payments. What limitation is being highlighted?
+Answer: Merchant risk
+
+A business prepares its site for peak shopping seasons. The team ensures the platform can handle sudden traffic growth without wasting resources during slower times. What factor is being managed?
+Answer: Scalability planning
+
+An online navigation service is offered free to users but shows sponsored ads during usage. Which revenue model does this reflect?
+Answer: Affiliate model
+
+An online clothing store requires customers to enter a card number and verification code during checkout. Which payment system supports this?
+Answer: Credit card
+
+A firm uses online ads as its main income source. Which revenue model is this?
+Answer: Advertising-focused
+
+A hacker modifies the front page of an online store, replacing its content with offensive material. What type of activity is this?
+Answer: Cybervandalism targeting visibility
+
+A business uses software to manage inventory levels but does not sell products online. This practice is considered:
+Answer: E-business process
+
+A buyer wants a payment option that is fast and reduces the chance of fraud while making online purchases. Which attribute is prioritized?
+Answer: Irrefutability and security
+
+An online retailer wants its website name to be easy for customers to remember instead of using numbers. What system enables this?
+Answer: Domain Name System
+
+A small clothing store wants to sell nationwide without opening new branches. Which e-commerce feature makes this possible?
+Answer: Global reach of transactions
+
+A cafÃ© accepts advance orders through social media direct messages and prepares them before pickup. What type of commerce is being used?
+Answer: Social commerce
+
+A website invests in meta tags, structured content, and keyword strategies to appear higher in Google search results. Which optimization strategy is being applied?
+Answer: Search engine placement
+
+An online business wants to describe its target audience by age, gender, and income before launching. Which factor is being considered?
+Answer: Demographic profile of users
+
+A video platform experiences network slowdowns because multiple users repeatedly request the same file, consuming unnecessary bandwidth. What issue is this?
+Answer: Network architecture issue
+
+Customers report that an e-commerce site became slower and harder to use after new security features were added. What tension does this show?
+Answer: Balance between security and usability
+
+A fashion brand highlights eco-friendly production and recyclable packaging in its marketing. Which e-commerce trend is influencing customer preference?
+Answer: Sustainability and ethics
+
+An online store notices a decline in customer engagement. The manager decides to review strengths, weaknesses, opportunities, and threats. Which tool is being applied?
+Answer: SWOT analysis process
+
+An e-commerce app tracks browsing history and suggests items based on recently viewed products. This raises concerns about:
+Answer: Privacy and security
+
+A new payment app competes by lowering transaction fees compared to existing platforms. Which factor of competition is evident?
+Answer: Value proposition
+
+A portal earns money by charging a small percentage every time users complete a transaction, such as booking or payment. Which model is applied?
+Answer: Transaction fee model
+
+A website integrates product descriptions with customer videos and reviews to influence purchasing. Which element is demonstrated?
+Answer: Value proposition
+
+A supermarket needs a payment method that can be exchanged instantly without processing delays. What is the most suitable option?
+Answer: Peer-to-peer transfer
+
+A company develops a plan for its online presence, including its mission statement, target audience, competitive space, and project budget. What activity is this?
+Answer: E-commerce presence planning
+
+After a website launch, the IT team continues updating the system with bug fixes, patches, and performance improvements, keeping costs close to development expenses. Which process is this?
+Answer: Maintenance activity
+
+A digital marketplace provides access to thousands of suppliers and buyers competing in real time. What model is applied?
+Answer: Exchange platform
+
+The IT department reports that employees across different departments experience slow access to applications hosted in the in-house infrastructure during peak hours. As the architect, what should be prioritized to improve performance and reliability?
+Answer: Invest in upgrading network bandwidth and load balancing
+
+A firm requires an addressing system that can handle billions of devices and prepare for future expansion. Which version of IP should be adopted?
+Answer: IPv6 addressing format
+
+A start-up wants to give customers access to storage and software without requiring them to buy servers or install programs. Which model should it use?
+Answer: Cloud computing
+
+A server is configured to filter incoming packets based on security rules. What type of protection is this?
+Answer: Firewall packet filtering
+
+In the metaverse, customers can visit a digital store and use avatars to try products before buying. This innovation belongs to which technology era?
+Answer: Web 3.0 with decentralization
+
+A store owner looks for a payment method that cannot be reversed, while still being secure and reliable. Which stakeholder need is prioritized?
+Answer: Merchant
+
+A gaming company sells credits that can only be used to buy items inside the game environment. Which payment type is described?
+Answer: Virtual currency
+
+A new e-commerce platform attracts buyers by offering products at lower prices than existing competitors. Which business concept is being emphasized?
+Answer: Competitive advantage

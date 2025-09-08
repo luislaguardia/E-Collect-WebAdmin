@@ -1,55 +1,125 @@
+/* ManageUsersPage.css - Minimalist Dark Theme */
+
 .manage-users-container {
-    width: 100%;
-  }
-  
-  .manage-users-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-  }
-  
-  .manage-users-header h1 {
-    margin: 0;
-  }
-  
-  .users-table-container {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    overflow: hidden;
-  }
-  
-  .users-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .users-table th, .users-table td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .users-table thead {
-    background-color: #94c83d;
-    color: #333;
-  }
-  
-  .users-table th {
-    font-weight: bold;
-  }
-  
-  .users-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .users-table tbody tr:hover {
-    background-color: #eef5e6;
-  }
-  
-  .users-table td[colSpan="4"] {
-    text-align: center;
-    padding: 2rem;
-    color: #888;
-  }
+  width: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* --- Header --- */
+.manage-users-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.manage-users-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+/* --- Filter Dropdown --- */
+.filter-dropdown {
+  padding: 0.75rem 1rem;
+  background-color: #1e293b; /* Dark background */
+  border: 1px solid #334155; /* Subtle border */
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #e2e8f0; /* Light text */
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  min-width: 180px;
+}
+
+.filter-dropdown:focus {
+  outline: none;
+  border-color: #3b82f6; /* Accent color on focus */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* --- Table Container --- */
+.users-table-container {
+  background-color: #1e293b; /* Dark background for the table */
+  border: 1px solid #334155;
+  border-radius: 12px;
+  overflow: hidden; /* Keeps the border-radius on the table */
+}
+
+/* --- Table Styles --- */
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-table th,
+.users-table td {
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.users-table th {
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: #94a3b8; /* Muted color for headers */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid #334155;
+}
+
+.users-table td {
+  border-bottom: 1px solid #334155;
+  font-size: 0.95rem;
+  color: #e2e8f0;
+}
+
+/* --- Row Hover Effect --- */
+.users-table tbody tr:hover {
+  background-color: #334155; /* Simple hover effect */
+}
+
+.users-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* --- Specific Column Styling --- */
+.users-table td:first-child { /* User ID */
+  color: #94a3b8;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9rem;
+}
+
+.users-table td:nth-child(2) { /* User Name */
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.users-table td:last-child { /* Total Points */
+  font-weight: 700;
+  color: #60a5fa; /* Accent color for points */
+  font-size: 1rem;
+}
+
+/* --- Empty State --- */
+.users-table td[colSpan="4"] {
+  text-align: center;
+  padding: 3rem;
+  color: #94a3b8;
+  font-size: 1rem;
+}
+
+/* --- Loading and Error States --- */
+/* Your original JS uses simple divs. These styles will center them. */
+.manage-users-container > div:first-child {
+  text-align: center;
+  padding: 4rem;
+  font-size: 1.2rem;
+  color: #94a3b8;
+}
+
+.error-message {
+  color: #f87171; /* Red color for errors */
+}

@@ -34,9 +34,9 @@ const ManageUsersPage = () => {
     <div className="manage-users-container">
       <div className="manage-users-header">
         <h1>Manage Users</h1>
-        <select className="filter-dropdown">
-          <option>Filter by...</option>
-        </select>
+        {/* <select className="filter-dropdown"> */}
+          {/* <option>Filter by...</option> */}
+        {/* </select> */}
       </div>
 
       <div className="users-table-container">

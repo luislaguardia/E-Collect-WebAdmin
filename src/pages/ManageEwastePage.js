@@ -6,12 +6,25 @@ const ManageEwastePage = () => {
   const [ewasteData, setEwasteData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('All');
+  const categories = ['All', ...new Set(ewasteData.map(item => item.category))];
+
+  const handleCategoryChange = (e) => {
+    setCategoryFilter(e.target.value);
+  };
+  
+  // This filter will now work on the pre-sorted data
+  const filteredData = categoryFilter === 'All'
+    ? ewasteData
+    : ewasteData.filter(item => item.category === categoryFilter);
 
   useEffect(() => {
     const fetchEwasteData = async () => {
       try {
         const response = await adminService.getAllEwaste();
-        setEwasteData(response.data.data);
+        // Sort the data by price (highest to lowest) before setting state
+        const sortedData = response.data.data.sort((a, b) => Number(b.phpValue) - Number(a.phpValue));
+        setEwasteData(sortedData);
       } catch (err) {
         setError('Failed to fetch e-waste data.');
         console.error(err);
@@ -35,9 +48,16 @@ const ManageEwastePage = () => {
     <div className="ewaste-container">
       <div className="ewaste-header">
         <h1>Manage EWASTE</h1>
-        {/* Placeholder for a filter dropdown */}
-        <select className="filter-dropdown">
-          <option>Filter by...</option>
+        <select
+          className="filter-dropdown"
+          value={categoryFilter}
+          onChange={handleCategoryChange}
+        >
+          {categories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -53,8 +73,8 @@ const ManageEwastePage = () => {
             </tr>
           </thead>
           <tbody>
-            {ewasteData.length > 0 ? (
-              ewasteData.map((item) => (
+            {filteredData.length > 0 ? (
+              filteredData.map((item) => (
                 <tr key={item._id}>
                   <td>{item.userId?.fullName || 'N/A'}</td>
                   <td>{new Date(item.scannedDate).toLocaleDateString()}</td>

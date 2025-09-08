@@ -1,11 +1,35 @@
 .main-layout {
-    display: flex;
-  }
+  display: flex;
+  min-height: 100vh;
+}
+
+/* MainLayout.css */
+
+.main-content {
+  flex-grow: 1;
+  padding: 2rem;
   
+  /* FROM THIS: */
+  /* margin-left: 250px; */
+
+  /* TO THIS: */
+  margin-left: 280px; /* Correct! Matches the sidebar's width */
+  
+  background-color: #0f172a;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 1024px) {
   .main-content {
-    flex-grow: 1;
-    padding: 2rem;
-    margin-left: 250px; /* Same as sidebar width */
-    background-color: #f9f9f9;
-    min-height: 100vh;
+    margin-left: 0;
+    padding: 1rem;
   }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 0.5rem;
+  }
+}
