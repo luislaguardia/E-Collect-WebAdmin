@@ -458,13 +458,18 @@ const InfoPage = () => {
             <h2>Ready to Make a Difference?</h2>
             <p>Join thousands of users who are already contributing to a cleaner, more sustainable future.</p>
             <div className="cta-buttons">
-              <button className="cta-btn primary" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                Get Started
-              </button>
-              <button className="cta-btn secondary" onClick={handleAdminLogin}>
-                Admin Access
-              </button>
-            </div>
+  <a 
+    href="https://drive.google.com/drive/folders/1vbzycU6E5F2R82gFeu4t1R4LLu_EV0yZ?usp=sharing" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="cta-btn primary"
+  >
+    Download
+  </a>
+  <button className="cta-btn secondary" onClick={handleAdminLogin}>
+    Admin Access
+  </button>
+</div>
           </div>
         </div>
       </section>
