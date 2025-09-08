@@ -486,7 +486,7 @@ const InfoPage = () => {
             <div className="footer-links">
               <div className="footer-section">
                 <h4>Contact</h4>
-                <p>📧 luispogi@ecollect.com</p>
+                <p>📧 support@ecollect.com</p>
                 <p>📞 +63 123 456 7890</p>
                 <p>📍 Metro Manila, Philippines</p>
               </div>
